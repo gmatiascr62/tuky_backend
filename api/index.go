@@ -2,20 +2,10 @@ package handler
 
 import (
 	"net/http"
-	"sync"
 
-	"tukychat/internal/app"
-)
-
-var (
-	once sync.Once
-	h    http.Handler
+	"tukychat/pkg/web"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	once.Do(func() {
-		h = app.NewRouter()
-	})
-
-	h.ServeHTTP(w, r)
+	web.Handler().ServeHTTP(w, r)
 }
