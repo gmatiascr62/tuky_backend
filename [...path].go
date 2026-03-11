@@ -6,6 +6,8 @@ import (
 	"tukychat/pkg/web"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	web.Handler().ServeHTTP(w, r)
+var handler = web.Handler()
+
+func ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	handler.ServeHTTP(w, r)
 }
