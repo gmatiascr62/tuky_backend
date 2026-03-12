@@ -56,7 +56,7 @@ r.OPTIONS("/*path", func(c *gin.Context) {
 	{
 		api.GET("/health", handlers.Health)
 
-		protected := api.Group("/")
+		protected := api.Group("")
 		protected.Use(middleware.RequireAuth())
 		{
 			protected.GET("/me", handlers.Me)
