@@ -14,22 +14,43 @@ func NewRouter() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.New()
-	r.Use(gin.Recovery())
+    r.Use(gin.Recovery())
 
-	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{
-			"http://localhost:5000",
-			"http://127.0.0.1:5000",
-			"http://localhost:5500",
-			"http://127.0.0.1:5500",
-			"https://tuky-front.vercel.app",
-		},
-		AllowMethods: []string{"GET", "POST", "PATCH", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders: []string{"Content-Length"},
-		AllowCredentials: false,
-		MaxAge: 12 * time.Hour,
-	}))
+    r.Use(cors.New(cors.Config{
+	    AllowOrigins: []string{
+		    "http://localhost:5000",
+		    "http://127.0.0.1:5000",
+		    "http://localhost:5500",
+		    "http://127.0.0.1:5500",
+		    "https://tuky-front.vercel.app",
+	    },
+	    AllowMethods: []string{
+		    "GET",
+		    "POST",
+		    "PUT",
+		    "PATCH",
+		    "DELETE",
+		    "OPTIONS",
+	    },
+	    AllowHeaders: []string{
+		    "Origin",
+		    "Content-Length",
+		    "Content-Type",
+		    "Authorization",
+		    "Accept",
+		    "X-Requested-With",
+	    },
+	    ExposeHeaders: []string{
+		    "Content-Length",
+	    },
+	    AllowCredentials: false,
+	    MaxAge: 12 * time.Hour,
+	    OptionsResponseStatusCode: 200,
+    }))
+
+r.OPTIONS("/*path", func(c *gin.Context) {
+	c.Status(200)
+})
 
 	api := r.Group("/api")
 	{
