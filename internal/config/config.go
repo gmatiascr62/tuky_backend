@@ -1,7 +1,6 @@
 package config
 
 import "os"
-
 type Config struct {
 	SupabaseURL     string
 	SupabaseAnonKey string
