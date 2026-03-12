@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"tukychat/internal/config"
@@ -33,6 +34,9 @@ func GetPool() (*pgxpool.Pool, error) {
 			err = fmt.Errorf("parse DATABASE_URL: %w", parseErr)
 			return
 		}
+
+		// Importante para Supabase transaction pooler / proxies
+		poolConfig.ConnConfig.DefaultQueryExecMode = pgx.QueryExecModeSimpleProtocol
 
 		poolConfig.MaxConns = 5
 		poolConfig.MinConns = 0
